@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.facebook.react.ReactInstanceManager
 import com.facebook.react.ReactRootView
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
     private val OVERLAY_PERMISSION_REQ_CODE: Int = 1
     private lateinit var mReactRootView: ReactRootView
     private lateinit var mReactInstanceManager: ReactInstanceManager
+    private lateinit var reactUIContainer: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,9 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
         // The string here (e.g. "MyReactNativeApp") has to match
         // the string in AppRegistry.registerComponent() in index.js
         mReactRootView.startReactApplication(mReactInstanceManager, "MyReactApplication", null)
-        setContentView(mReactRootView)
+        setContentView(R.layout.activity_main_react)
+        reactUIContainer = findViewById(R.id.react_ui_container_layout)
+        reactUIContainer.addView(mReactRootView)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
